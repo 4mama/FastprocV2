@@ -1,6 +1,9 @@
 ![license](https://img.shields.io/badge/License-mit-green)  ![badge](https://img.shields.io/badge/Lang-C-blue)
 # 🖥️ *FastprocV2* 
 <img width="338" height="353" alt="CLI Demo" src="https://github.com/ribeiro-boll/Fastproc-v2/blob/main/fastprocv2.gif" />
+<img width="656" height="440" alt="CLI Demo res" src="https://github.com/user-attachments/assets/61d30eda-55a1-4c60-996f-82f768664c3e" />  
+
+
 
 ## Índice
 
