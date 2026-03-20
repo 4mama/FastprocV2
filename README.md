@@ -1,7 +1,6 @@
 ![license](https://img.shields.io/badge/License-mit-green)  ![badge](https://img.shields.io/badge/Lang-C-blue)
-# 🖥️ *Fastproc-C* 
+# 🖥️ *Fastproc++* 
 <!-- ![CLI Demo](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHB4OWQwd2h1eXF2M2RhaWdtdm12NmkyY2I3YjdrdHFtMDMxNXZoZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jHZeHPMkhkCbgRcmfx/giphy.gif) -->
-# fastproc++
 
 ## Índice
 
