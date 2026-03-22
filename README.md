@@ -31,7 +31,7 @@
 
 ## Visão Geral
 
-**fastprocV2** é um gerenciador de processos em modo terminal desenvolvido em C, utilizando ncurses. O projeto foi construído com foco em explorar conceitos de sistemas Linux, leitura direta do `/proc`, concorrência e manipulação eficiente de dados em tempo real.
+**fastprocV2** é um gerenciador de processos em modo terminal desenvolvido em C com ncurses. O projeto foca em oferecer uma interface compacta e eficiente, realizando leitura direta do /proc para monitoramento em tempo real, com uso de concorrência e manipulação otimizada de dados.
 
 ---
 
@@ -170,7 +170,7 @@ Para evitar inconsistência:
 
 ## Overview
 
-**fastprocV2** is a terminal-based process manager written in C using ncurses. It focuses on Linux internals, `/proc` parsing, concurrency, and real-time updates.
+**fastprocV2** is a terminal-based process manager written in C using ncurses. The project focuses on providing a compact and efficient interface, performing direct /proc parsing for real-time monitoring, with the use of concurrency and optimized data handling.
 
 ---
 
