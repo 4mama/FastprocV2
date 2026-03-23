@@ -618,6 +618,7 @@ int main(){
 	int ch;
     int maxElements = 12;
     int condTyping = 0;
+    char* lastClosedProcess = strdup("~~~~~~~~");
 	initscr();
 	cbreak();
     keypad(stdscr, TRUE);
@@ -648,13 +649,16 @@ int main(){
     double memoria_total_pc = 0;
     double memoria_usada_atual = 0;
     double percentage = 0;
+    int contadorLastValidProcess = 0;
+    int condKeyDown;
     while (1) {
+        condKeyDown = 0;
         pthread_mutex_lock(&mutex);
         processStruct *listSnapshot = deep_copy_process_list(processListNcurses, processNmbrNcurses);
         int snapshotCount = processNmbrNcurses;
         pthread_mutex_unlock(&mutex);
-
         FILE *meminfo = fopen("/proc/meminfo", "r");
+
 
         if(meminfo) {
             while (fgets(linha_texto, sizeof(linha_texto), meminfo) != NULL){
@@ -677,9 +681,7 @@ int main(){
         box(win3, 0, 0);
         box(win4, 0, 0);
         box(winInfo, 0, 0);
-        if (selected<inicio){
-            selected = inicio;
-        }
+
         mvwprintw(win1, 0, 2, "> Current Process List <");
         if (showCredits){
             mvwprintw(win4,5,37, "(Author: Lucca Ribeiro, Bolota :D)");
@@ -687,7 +689,7 @@ int main(){
         for (int i = 0; i < maxElements ; i++){
             int index_ncurses = inicio + i-3;
             if (i == 0) {
-                mvwprintw(win1, i+1, 1, "   ________________________________________________________________  ");
+                mvwprintw(win1, i+1, 1, "  ________________________________________________________________  ");
                 continue;
             }
             if (i == 1){
@@ -700,27 +702,30 @@ int main(){
                 mvwprintw(win1, i+1, 1, "  |___________|__________________|_________|_______________|_______| ");
                 continue;
             }
-        
-            else if (i<snapshotCount+3) {
-                
+            if (i == maxElements-1) {
+                mvwprintw(win1, i+1, 1, "  !________________________________________________________________! ",index_ncurses);
+                continue;
+            }
+
+            else if (i<snapshotCount+3 && index_ncurses < snapshotCount && index_ncurses >=0) {
                 mvwprintw(win1, i+1, 3, "|");
                 if (index_ncurses == selected) {
                     wattron(win1, A_REVERSE);
                 }
-                mvwprintw(win1, i+1, 4, "  %7d  | %-16.15s | %6.d  |  %6.1f %-5.4s | %4.1lf%% ", listSnapshot[index_ncurses].p_pid,listSnapshot[index_ncurses].p_name,listSnapshot[index_ncurses].p_threads,listSnapshot[index_ncurses].p_ram/(1024.0*1024)," MBs", listSnapshot[index_ncurses].p_cpuPercent * 100);
+                if(listSnapshot[index_ncurses].p_ram> (long long int)1024*1024*1024){
+                    mvwprintw(win1, i+1, 4, "  %7d  | %-16.15s | %6.d  |  %6.1f %-5.4s | %4.1lf%% ", listSnapshot[index_ncurses].p_pid,listSnapshot[index_ncurses].p_name,listSnapshot[index_ncurses].p_threads,listSnapshot[index_ncurses].p_ram/(1024.0*1024*1024)," GBs", listSnapshot[index_ncurses].p_cpuPercent * 100);
+                }
+                if (listSnapshot[index_ncurses].p_ram<(long long int)(1024*1024*1024)){
+                    mvwprintw(win1, i+1, 4, "  %7d  | %-16.15s | %6.d  |  %6.1f %-5.4s | %4.1lf%% ", listSnapshot[index_ncurses].p_pid,listSnapshot[index_ncurses].p_name,listSnapshot[index_ncurses].p_threads,listSnapshot[index_ncurses].p_ram/(1024.0*1024)," MBs", listSnapshot[index_ncurses].p_cpuPercent * 100);
+                }
+                contadorLastValidProcess = index_ncurses;
                 if (index_ncurses == selected) {
                     wattroff(win1, A_REVERSE);
                 }
                 mvwprintw(win1, i+1, 68, "|");
-
-
             }
             else {
                 mvwprintw(win1, i+1, 1, "  |           |                  |         |               |       | ");
-            }
-            if (i == maxElements-1) {
-                mvwprintw(win1, i+1, 1, "  !________________________________________________________________! ");
-                continue;
             }
         }
         ch = getch();
@@ -767,6 +772,7 @@ int main(){
                     break;
             }
         }
+
         else {
             switch (ch) {
                 case 'w':
@@ -774,7 +780,7 @@ int main(){
                 case KEY_UP:
                     if (selected - inicio > 0) {
                         selected--;
-                        if (selected + maxElements - 1 < inicio + maxElements && inicio > 0) {
+                        if (selected - 1 < inicio && inicio > 0) {
                             inicio--;
                         }
                     }
@@ -783,9 +789,10 @@ int main(){
                 case 's':
                 case 'S':
                 case KEY_DOWN:
-                    if (selected < snapshotCount - 1) {
+                    if (snapshotCount - selected> 1) {
                         selected++;
-                        if (selected > inicio + maxElements - 5 && inicio < snapshotCount + 1) {
+                        condKeyDown = 1;
+                        if (selected  > inicio + maxElements - 5 && inicio +  maxElements - 5< snapshotCount+3) {
                             inicio++;
                         }
                     }
@@ -793,6 +800,9 @@ int main(){
                 
                 case 'k':
                 case 'K': {
+                    free(lastClosedProcess);
+                    lastClosedProcess = NULL;
+                    lastClosedProcess = strdup(listSnapshot[selected].p_name);
                     long codigo = listSnapshot[selected].p_pid;
                     kill(codigo, SIGTERM);
                     break;
@@ -827,11 +837,21 @@ int main(){
                     break;
             }
         }
+        // if (selected   > snapshotCount){
+        //     selected = selected - (selected-(snapshotCount -1));
+        // }
+        if (selected > contadorLastValidProcess && !condKeyDown){
+            selected = contadorLastValidProcess;
+        }
+        if (selected<inicio){
+            selected = inicio;
+        }
         mvwprintw(win2,0,2,    "> Basic Controls <");
-        mvwprintw(win2,1,2,    "-> Press 'w' or 'W' or 'Arrow Up'   to move up a process.");
-        mvwprintw(win2,2,2,    "-> Press 's' or 'S' or 'Arrow Down' to move down a process.");
-        mvwprintw(win2,3,2,    "-> Press 'k' or 'K' to close the selected task.");
-        mvwprintw(win2,4,2,    "-> Press 'q' or 'Q' to exit the program.");
+        mvwprintw(win2,0,30,   "> Last Closed Process: %-15s <", lastClosedProcess);
+        mvwprintw(win2,1,2,    " Press 'w' or 'W' or 'Arrow Up'   to move up a process.");
+        mvwprintw(win2,2,2,    " Press 's' or 'S' or 'Arrow Down' to move down a process.");
+        mvwprintw(win2,3,2,    " Press 'k' or 'K' to close the selected task.");
+        mvwprintw(win2,4,2,    " Press 'q' or 'Q' to exit the program.");
         
         mvwprintw(winInfo,0,2,    "> Sorting Methods Controls <");
         mvwprintw(winInfo,0,39,   "> Current Sort Method: %s <", sortMethods[currSortMethod]);
@@ -839,17 +859,18 @@ int main(){
         mvwprintw(winInfo,2,2,    "Press '2' to sort by CPU usage  | Press '4' to sort by PID");
 
         mvwprintw(win3,0,2, "> System Info <");
-        mvwprintw(win3,1,2, "Current RAM in Use:     %.2f GBs | Total RAM Avaliable: %.2f GBs", memoria_usada_atual,memoria_total_pc);
-        mvwprintw(win3,2,2, "Current RAM in Percent: %.2f%%   | Process count: %-9d",percentage, snapshotCount);
+        mvwprintw(win3,1,2,        "Current RAM in Use:  %.2f GBs  | Total RAM Avaliable: %.2f GBs", memoria_usada_atual,memoria_total_pc);
+        mvwprintw(win3,2,2,        "Current RAM in Percent: %.2f%% | Process count: %-9d",percentage, snapshotCount);
 
         mvwprintw(win4,0,2,    "> Search By Name <");
-        mvwprintw(win4,1,2,    "Press 'Enter' to begin to type the Process Name and to Stop typing.");
-        mvwprintw(win4,2,2,    "Search Parameter: ", charSequence);
+        mvwprintw(win4,1,2,    "Press 'Enter' to Begin/Stop typing the Process name.");
+        mvwprintw(win4,2,2,    "Search Parameter: ");
         wattron (win4, A_REVERSE | A_BOLD);
         mvwprintw(win4,2,20,   "%-32s", charSequence);
         wattroff(win4, A_REVERSE | A_BOLD);
-        mvwprintw(win1,0,36,   "(Author: Lucca Ribeiro, Bolota :D)");
-
+        if (showCredits){
+            mvwprintw(win1,0,36,   "(Author: Lucca Ribeiro, Bolota :D)");
+        }
         wrefresh(win1);
         wrefresh(win2);
         wrefresh(win3);
