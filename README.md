@@ -4,7 +4,6 @@
 <img width="656" height="440" alt="CLI Demo res" src="https://github.com/user-attachments/assets/61d30eda-55a1-4c60-996f-82f768664c3e" />  
 
 
-
 ## Índice
 
 #### Português
