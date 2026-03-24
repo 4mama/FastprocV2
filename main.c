@@ -618,7 +618,7 @@ int main(){
 	int ch;
     int maxElements = 12;
     int condTyping = 0;
-    char* lastClosedProcess = strdup("~~~~~~~~");
+    char* lastClosedProcess = strdup("~~~~~~~~~~~~~");
 	initscr();
 	cbreak();
     keypad(stdscr, TRUE);
@@ -658,8 +658,6 @@ int main(){
         int snapshotCount = processNmbrNcurses;
         pthread_mutex_unlock(&mutex);
         FILE *meminfo = fopen("/proc/meminfo", "r");
-
-
         if(meminfo) {
             while (fgets(linha_texto, sizeof(linha_texto), meminfo) != NULL){
                 if (strncmp(linha_texto, "MemAvailable:", 13) == 0){
@@ -674,8 +672,6 @@ int main(){
             percentage = (memoria_usada_atual/memoria_total_pc)*100;
             fclose(meminfo);
         }
-
-
         box(win1, 0, 0);
         box(win2, 0, 0);
         box(win3, 0, 0);
@@ -689,24 +685,21 @@ int main(){
         for (int i = 0; i < maxElements ; i++){
             int index_ncurses = inicio + i-3;
             if (i == 0) {
-                mvwprintw(win1, i+1, 1, "  ________________________________________________________________  ");
+                mvwprintw(win1, i+1, 4,    "________________________________________________________________  ");
                 continue;
             }
             if (i == 1){
-                
                 mvwprintw(win1, i+1, 1, "  |    PID    |       name       | threads |      ram      |  CPU  | ");
                 continue;
             }
-        
             if (i == 2) {
-                mvwprintw(win1, i+1, 1, "  |___________|__________________|_________|_______________|_______| ");
+                mvwprintw(win1, i+1, 1, "  |-----------|------------------|---------|---------------|-------| ");
                 continue;
             }
             if (i == maxElements-1) {
-                mvwprintw(win1, i+1, 1, "  !________________________________________________________________! ",index_ncurses);
+                mvwprintw(win1, i+1, 1, "  !________________________________________________________________! ");
                 continue;
             }
-
             else if (i<snapshotCount+3 && index_ncurses < snapshotCount && index_ncurses >=0) {
                 mvwprintw(win1, i+1, 3, "|");
                 if (index_ncurses == selected) {
@@ -762,17 +755,15 @@ int main(){
                 case '@': case '#': case '%': case '&': case '*':
                 case '|': case ';': case ':': case '>': case '<':
                 case '.': case '?':
-
-                    if (charSequenceCurrIndex<32) {
-                        charSequence[charSequenceCurrIndex] = tolower(ch);
-                        charSequenceCurrIndex++;
-                        selected = 0;
-                        inicio = 0;
-                    }
-                    break;
+                if (charSequenceCurrIndex<32) {
+                    charSequence[charSequenceCurrIndex] = tolower(ch);
+                    charSequenceCurrIndex++;
+                    selected = 0;
+                    inicio = 0;
+                }
+                break;
             }
         }
-
         else {
             switch (ch) {
                 case 'w':
@@ -797,7 +788,7 @@ int main(){
                         }
                     }
                     break;
-                
+
                 case 'k':
                 case 'K': {
                     free(lastClosedProcess);
@@ -847,20 +838,20 @@ int main(){
             selected = inicio;
         }
         mvwprintw(win2,0,2,    "> Basic Controls <");
-        mvwprintw(win2,0,30,   "> Last Closed Process: %-15s <", lastClosedProcess);
+        mvwprintw(win2,0,27,   "> Last Closed Process: %-15s <", lastClosedProcess);
         mvwprintw(win2,1,2,    " Press 'w' or 'W' or 'Arrow Up'   to move up a process.");
         mvwprintw(win2,2,2,    " Press 's' or 'S' or 'Arrow Down' to move down a process.");
         mvwprintw(win2,3,2,    " Press 'k' or 'K' to close the selected task.");
         mvwprintw(win2,4,2,    " Press 'q' or 'Q' to exit the program.");
         
-        mvwprintw(winInfo,0,2,    "> Sorting Methods Controls <");
-        mvwprintw(winInfo,0,39,   "> Current Sort Method: %s <", sortMethods[currSortMethod]);
-        mvwprintw(winInfo,1,2,    "Press '1' to sort by Used RAM   | Press '3' to sort by Threads");
-        mvwprintw(winInfo,2,2,    "Press '2' to sort by CPU usage  | Press '4' to sort by PID");
+        mvwprintw(winInfo,0,2, "> Sorting Methods Controls <");
+        mvwprintw(winInfo,0,39,"> Current Sort Method: %s <", sortMethods[currSortMethod]);
+        mvwprintw(winInfo,1,2, "Press '1' to sort by Used RAM   | Press '3' to sort by Threads");
+        mvwprintw(winInfo,2,2, "Press '2' to sort by CPU usage  | Press '4' to sort by PID");
 
-        mvwprintw(win3,0,2, "> System Info <");
-        mvwprintw(win3,1,2,        "Current RAM in Use:  %.2f GBs  | Total RAM Avaliable: %.2f GBs", memoria_usada_atual,memoria_total_pc);
-        mvwprintw(win3,2,2,        "Current RAM in Percent: %.2f%% | Process count: %-9d",percentage, snapshotCount);
+        mvwprintw(win3,0,2,    "> System Info <");
+        mvwprintw(win3,1,2,    "Current RAM in Use:  %.2f GBs   | Total RAM Avaliable: %.2f GBs", memoria_usada_atual,memoria_total_pc);
+        mvwprintw(win3,2,2,    "Current RAM in Percent: %.2f%%  | Process count: %-9d",percentage, snapshotCount);
 
         mvwprintw(win4,0,2,    "> Search By Name <");
         mvwprintw(win4,1,2,    "Press 'Enter' to Begin/Stop typing the Process name.");
@@ -869,14 +860,13 @@ int main(){
         mvwprintw(win4,2,20,   "%-32s", charSequence);
         wattroff(win4, A_REVERSE | A_BOLD);
         if (showCredits){
-            mvwprintw(win1,0,36,   "(Author: Lucca Ribeiro, Bolota :D)");
+            mvwprintw(win1,0,36,"(Author: Lucca Ribeiro, Bolota :D)");
         }
         wrefresh(win1);
         wrefresh(win2);
         wrefresh(win3);
         wrefresh(win4);
         wrefresh(winInfo);
-
         if (breakLoop){
             pthread_join(t1, NULL);
             endwin();
